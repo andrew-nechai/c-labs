@@ -1,0 +1,17 @@
+8
+a
+TI,Thusday,2
+b
+PO,Wensday,3,OSSP,33
+a
+TI,Friday,6
+b
+PI,Sunday,1,KSS,12
+a
+OOP,Monday,1
+b
+KSS,Monday,4,OOP,5
+a
+RI,Wensday,3
+b
+PO,Thusday,3,OSSP,8

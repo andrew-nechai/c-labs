@@ -1,0 +1,120 @@
+//Нечай Андрей ПО-21
+//Лабораторная работа №7
+
+#pragma hdrstop
+#include <stdio.h>
+#include <conio.h>
+#include "Cel.h"
+#include "ChangeCel.h"
+#include "Collection.h"
+#include <string.h>
+#pragma argsused
+
+int main() {
+    Cel *sub1 = new Cel("a", "Monday", 1),
+        *sub2 = new ChangeCel("KSS", "Monday", 4, "OSSP", 5),
+        *sub3 = new Cel,
+        *sub4 = new ChangeCel,
+        *sub5 = new Cel("b", "Thusday", 2),
+        *sub6 = new ChangeCel("PO", "Thusday", 3, "OOP", 8),
+        *sub7 = new Cel("c", "Wensday", 3),
+        *sub8 = new ChangeCel("PO", "Wensday", 3, "KSS", 81),
+
+        *sub9 = new Cel("TI", "Thusday", 2),
+        *sub10 = new ChangeCel("PO", "Wensday", 3, "OSSP", 33),
+        *sub11 = new Cel("TI", "Friday", 6),
+        *sub12 = new ChangeCel("PI", "Sunday", 1, "KSS", 12),
+        *sub13 = new Cel("OOP", "Monday", 1),
+        *sub14 = new ChangeCel("KSS", "Monday", 4, "OOP", 5),
+        *sub15 = new Cel("RI", "Wensday", 3),
+        *sub16 = new ChangeCel("PO", "Thusday", 3, "OSSP", 8);
+
+    Collection col, col2, *dcol, *dcol2;
+
+    printf("%d", strcmp("a", "b"));
+
+    col.add_element(sub1);
+    col.add_element(sub2);
+    col.add_element(sub3);
+    col.add_element(sub4);
+    col.add_element(sub5);
+    col.add_element(sub6);
+    col.add_element(sub7);
+    col.add_element(sub8);
+
+    FILE *f = fopen("file.txt", "w");
+    sub1->savef(f);
+    sub2->savef(f);
+    fclose(f);
+
+    f = fopen("file.txt", "r");
+    sub3->readf(f);
+    sub4->readf(f);
+    fclose(f);
+
+    sub3->print();
+    sub4->print();
+
+//    col.scanobj(1);
+//    col.scanobj(2);
+    col.printobj(1);
+    col.printobj(2);
+
+    f = fopen("file.txt", "w");
+    col.savef(f);
+    fclose(f);
+
+    f = fopen("file.txt", "r");
+    col2.readf(f);
+    fclose(f);
+
+    printf("\n\n");
+    col2.print();
+
+    printf("\n\nSorted collection: ");
+
+    col2.sort();
+    col2.print();
+    printf("\n\n");    
+
+    dcol = new Collection;
+    dcol2 = new Collection;
+
+    dcol->add_element(sub9);
+    dcol->add_element(sub10);
+    dcol->add_element(sub11);
+    dcol->add_element(sub12);
+    dcol->add_element(sub13);
+    dcol->add_element(sub14);
+    dcol->add_element(sub15);
+    dcol->add_element(sub16);
+
+    dcol->scanobj(1);
+    dcol->scanobj(2);
+    dcol->printobj(1);
+    dcol->printobj(2);
+
+    f = fopen("file.txt", "w");
+    dcol->savef(f);
+    fclose(f);
+
+    f = fopen("file.txt", "r");
+    dcol2->readf(f);
+    fclose(f);
+
+    printf("\n\n");
+    dcol2->print();
+
+
+    printf("\n\nSorted collection: ");
+    dcol2->sort();
+    dcol2->print();
+    printf("\n\n");
+
+    getch();
+
+    delete dcol;
+    delete dcol2;
+
+    return 0;
+}

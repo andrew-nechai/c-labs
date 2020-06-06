@@ -1,0 +1,77 @@
+#include "ChangeCel.h"
+#include <string.h>
+#include <conio.h>
+#include <stdio.h>
+#include <iomanip.h>
+#include <iostream.h>
+
+ostream &operator >>(ostream &f, ChangeCel obj) {
+    f >> '(' << obj.getsubject() >> ',' >> obj.getweek_day() >> ',' >> obj.getnum_para() >> ',' >> obj.getchange_sub() >> ',' >> obj.getchange_kab() ')';
+    return f;
+}
+
+ChangeCel::ChangeCel() {
+    *change_sub = '\0';
+    change_kab = 0;
+}
+
+ChangeCel::ChangeCel(char* subj, char* day, int para, char* new_sub, int new_kab) : Cel(subj, day, para), change_kab(new_kab) {
+    setchange_sub(new_sub);
+}
+
+ChangeCel::ChangeCel(ChangeCel &obj) : Cel(obj){
+    strcpy(change_sub, obj.change_sub);
+    change_kab = obj.change_kab;
+}
+
+void ChangeCel::setchange_sub(char *s) {
+    strcpy(change_sub, s);
+}
+
+
+void ChangeCel::setchange_kab(int i) {
+    change_kab = i;
+}
+
+char* ChangeCel::getchange_sub() {
+    return change_sub;
+}
+
+int ChangeCel::getchange_kab() {
+    return change_kab;
+}
+
+void ChangeCel::print() {
+    Cel::print();
+    cout << endl << "change_sub = " << change_sub << dec << ", change_kab = " << change_kab;
+}
+
+void ChangeCel::scan() {
+    Cel::scan();
+    cout << "Vvedite new subject: ";
+    cin >> setw(20) >> change_sub;
+    flushall();
+    cout << "Vvedite new kab: ";
+    cin >> change_kab;
+}
+
+char* ChangeCel::getkey() {
+    return "b";
+}
+
+char* ChangeCel::sortkey(char *str) {
+    *(str) = 'b';
+    *(str+1) = '\0';
+    strcat(str, change_sub);
+    return str;
+}
+
+void ChangeCel::savef(FILE *f) {
+    fwrite(this, sizeof(ChangeCel), 1, f);
+}
+
+void ChangeCel::readf(FILE *f) {
+    ChangeCel obj;
+    fread(&obj, sizeof(ChangeCel), 1, f);
+    *(this) = obj;
+}

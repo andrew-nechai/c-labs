@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+#pragma hdrstop
+#pragma argsused
+
+#ifndef H_CLASS
+#define H_CLASS
+class Valute {
+    private :
+        char name_valute[80];
+        int kurs_prodashi;
+        int kurs_pokupki;
+    public :
+        Valute(char *, int, int);
+        Valute(Valute &);
+        void print();
+}
+#endif
+
+void Value::print() {
+    printf("\nname valute: %s , kurs prodashi: %d , kurs pokupki", name_valute, kurs_prodashi, kurs_pokupki);
+}
+
+Valute::Valute(char* val, int k_prod, int k_pokup) {
+    strcpy(name_valute, val);
+    kurs_prodashi = k_prod;
+    kurs_pokupki = k_pokup;
+}
+
+Valute::Valute(Valute &v) {
+    strcpy(name_valute, v.name_valute);
+    kurs_prodashi = v.kurs_prodashi;
+    kurs_pokupki = v.kurs_pokupki;
+}
+
+int main() {
+
+    return 0;
+}
+ 

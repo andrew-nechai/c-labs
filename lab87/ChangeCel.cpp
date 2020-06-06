@@ -1,0 +1,107 @@
+#include "ChangeCel.h"
+#include <string.h>
+#include <conio.h>
+#include <stdio.h>
+#include <iostream.h>
+#include <iomanip.h>
+
+ChangeCel::ChangeCel() {
+    *change_sub = '\0';
+    change_kab = 0;
+}
+
+ChangeCel::ChangeCel(char* subj, char* day, int para, char* new_sub, int new_kab) : Cel(subj, day, para), change_kab(new_kab) {
+    setchange_sub(new_sub);
+}
+
+ChangeCel::ChangeCel(ChangeCel &obj) : Cel(obj){
+    strcpy(change_sub, obj.change_sub);
+    change_kab = obj.change_kab;
+}
+
+void ChangeCel::setchange_sub(char *s) {
+    strcpy(change_sub, s);
+}
+
+
+void ChangeCel::setchange_kab(int i) {
+    change_kab = i;
+}
+
+char* ChangeCel::getchange_sub() {
+    return change_sub;
+}
+
+int ChangeCel::getchange_kab() {
+    return change_kab;
+}
+
+void ChangeCel::print() {
+    Cel::print();
+    cout << endl << "change_sub = " << change_sub << dec << ", change_kab = " << change_kab;
+}
+
+void ChangeCel::scan() {
+    Cel::scan();
+    cout << "Vvedite new subject: ";
+    cin >> setw(20) >> change_sub;
+    flushall();
+    cout << "Vvedite new kab: ";
+    cin >> change_kab;
+}
+
+ostream &operator <<(ostream &s, ChangeCel &obj) {
+    s << endl << "subject = " << obj.getsubject() << ", week_day = " << obj.getweek_day() << ", num_para = " << obj.getnum_para() << ", change_sub = " << obj.getchange_sub() << dec << ", change_kab = " << obj.getchange_kab();
+}
+
+void operator >>(istream &s, ChangeCel &obj) {
+    int n1, n2;
+    char str1[20], str2[20], str3[20];
+    cout << endl << "Vvedite subject: ";
+    s.width(20);
+    s >> str1;
+    flushall();
+    cout << "Vvedite week_day: ";
+    s.width(20);
+    s >> str2;
+    flushall();
+    cout << "Vvedite num_para: ";
+    s >> n1;
+    cout << "Vvedite new subject: ";
+    s >> setw(20) >> str3;
+    flushall();
+    cout << "Vvedite new kab: ";
+    cin >> n2;
+    obj.setsubject(str1);
+    obj.setweek_day(str2);
+    obj.setnum_para(n1);
+    obj.setchange_sub(str3);
+    obj.setchange_kab(n2);
+}
+
+char* ChangeCel::getkey() {
+    return "b";
+}
+
+char* ChangeCel::sortkey(char *str) {
+    *(str) = 'b';
+    *(str+1) = '\0';
+    strcat(str, change_sub);
+    return str;
+}
+
+void ChangeCel::savef(ofstream &f) {
+    //f.write(this, sizeof(ChangeCel);
+    f << this->getsubject() << "," << this->getweek_day() << "," << this->getnum_para() << "," << this->getchange_sub() << "," << this->getchange_kab() << '\n';
+}
+
+void ChangeCel::readf(ifstream &f) {
+    Cel obj;
+    char str[100];
+    f.getline(str, '|');
+    this->setsubject(strtok(str, ","));
+    this->setweek_day(strtok(NULL, ","));
+    this->setnum_para(atoi(strtok(NULL, ",")));
+    this->setchange_sub(strtok(NULL, ","));   
+    this->setchange_kab(atoi(strtok(NULL, ",")));
+}
